@@ -1,0 +1,37 @@
+{% if is_granted('IS_AUTHENTICATED_FULLY')%}
+<hr/>
+<div class=" ">
+       <ul class="nav nav-list menuNavigation">
+           <li>
+               <a href="{{path('fos_user_profile_show')}}">Mes informations</a>
+           </li>
+           <li>
+               <a href="{{path('fos_user_profile_edit')}}">editer mes informations</a>
+           </li>
+           <li>
+               <a href="{{path('fos_user_change_password')}}">changer mon password</a>
+           </li>
+           <li>
+               <a href="{{path('facture')}}">Mes factures</a>
+           </li>
+           <li>
+               <a href="#">Mes adresses</a>
+           </li>
+           <li>
+               <a href="{{path('fos_user_security_logout')}}">deconnexion</a>
+           </li>
+       </ul>
+   </div>
+
+{%else%}
+<hr/>
+<div class=" ">
+  <ul class="nav navbar-nav navbar-right menuNavigation">
+    <li><a href="{{path('fos_user_security_login')}}"  >se connecter</a></li>
+    <li><a href="{{path('fos_user_registration_register')}}"  >créer un compte</a></li>
+  </ul>
+</div>
+<br/>
+<hr/>
+{%endif%}
+   

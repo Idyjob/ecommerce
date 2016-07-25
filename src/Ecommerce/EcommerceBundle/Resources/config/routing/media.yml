@@ -1,0 +1,35 @@
+admin_medias:
+    pattern:  /
+    defaults: { _controller: "EcommerceBundle:MediaAdmin:index" }
+
+admin_medias_sort:
+    pattern:  /{field}/{type}/sort
+    defaults: { _controller: "EcommerceBundle:MediaAdmin:sort" }
+    requirements: { type: ASC|DESC }
+
+admin_medias_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "EcommerceBundle:MediaAdmin:show" }
+
+admin_medias_new:
+    pattern:  /new
+    defaults: { _controller: "EcommerceBundle:MediaAdmin:new" }
+
+admin_medias_create:
+    pattern:  /create
+    defaults: { _controller: "EcommerceBundle:MediaAdmin:create" }
+    requirements: { _method: post }
+
+admin_medias_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "EcommerceBundle:MediaAdmin:edit" }
+
+admin_medias_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "EcommerceBundle:MediaAdmin:update" }
+    requirements: { _method: post|put }
+
+admin_medias_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "EcommerceBundle:MediaAdmin:delete" }
+    requirements: { _method: post|delete }

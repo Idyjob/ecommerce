@@ -1,0 +1,10 @@
+
+
+<form class="navbar-form" action="{{path('rechercheProduits')}}" method="POST" name="searchForm">
+  <div class="form-group" >
+    <div class="input-group navFormSearch">
+        {{form_widget(form.recherche)}}
+         <span class="input-group-addon"><span class="glyphicon glyphicon-search submitsearchbtn"></span></span>
+    </div>
+  </div>
+</form>

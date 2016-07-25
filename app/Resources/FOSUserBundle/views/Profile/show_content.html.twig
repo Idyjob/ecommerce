@@ -1,0 +1,25 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="row">
+
+       <!-- <?php include '../layout/col-left-co.php'; ?> -->
+       <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+         {% include "UtilisateursBundle:Default:modulesUsed/utilisateurConnecte.html.twig" %}
+       </div>
+
+       <div class="col-md-9">
+           <h2>Mes informations</h2>
+           <div id="collapseOne" class="accordion-body collapse in">
+               <div class="accordion-inner">
+
+                   <div class="col-md-4">
+                       <h4>Modifier mes informations</h4>
+                       <form>
+                         <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+                         <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>

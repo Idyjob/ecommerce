@@ -1,0 +1,7 @@
+{%for  type,flasMessage in app.session.flashbag.get('success')%}
+  <div class="alert alert-sm alert-success aligntext">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>{{flasMessage}}</strong>
+  </div>
+
+{%endfor%}

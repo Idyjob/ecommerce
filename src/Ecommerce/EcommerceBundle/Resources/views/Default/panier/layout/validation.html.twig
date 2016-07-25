@@ -1,0 +1,99 @@
+{% extends "::/layout/layout.html.twig" %}
+{% set livraison = commande.commande.livraison %}
+{% set facturation = commande.commande.facturation %}
+{% set refTva = commande.commande.tva %}
+{% set produits = commande.commande.produits %}
+{% set totalHT = commande.commande.prixHT%}
+{% set totalTTC = commande.commande.prixTTC%}
+{% block body%}
+<div class="container">
+	<div class="row">
+			<div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+				    {% include "UtilisateursBundle:Default:/modulesUsed/utilisateurConnecte.html.twig" %}
+			</div>
+			<div class="col-md-9 col-xs-9 col-sm-9 col-lg-9">
+						{% render(controller('UtilisateursBundle:Default:flashMessages')) %}
+
+
+									<h3 class="well aligntext underlinetext">validation panier</h3>
+
+
+									<table class="table table-striped table-hover">
+											<thead>
+													<tr>
+															<th>Références</th>
+															<th>Quantité</th>
+															<th>Prix unitaire</th>
+															<th>Total HT</th>
+															<th>Total TTC</th>
+													</tr>
+											</thead>
+
+
+											{% for produit in produits %}
+											<tbody>
+
+
+													  <tr>
+															<form action="{{path('ajouter',{'id':produit.id})}}"  method="get">
+
+															<td> {{produit.reference}}</td>
+															<td> {{produit.quantite}}</td>
+															<td>{{produit.prixHT}} €</td>
+															<td>{{produit.prixHT * produit.quantite}} €</td>
+															<td>{{produit.prixTTC * produit.quantite}}  €</td>
+															</form>
+													</tr>
+
+											</tbody>
+
+
+										{% endfor %}
+
+
+									</table>
+
+
+							<dl class="dl-horizontal pull-right">
+									<dt>Total HT :</dt>
+									<dd>{{totalHT}} €</dd>
+									{%for key,tva in refTva%}
+									<dt>TVA {{key}}</dt>
+									<dd>{{tva }} €</dd>
+									{%endfor%}
+
+									<dt>Total TTC:</dt>
+									<dd>{{totalTTC}} €</dd>
+							</dl>
+
+							<div class="clearfix"></div>
+							<form action="{{path('validationCommande',{'id':commande.id})}}" method="post">
+
+									<input  type="hidden" name="token" value="{{commande.commande.token}}" />
+									<input  type="hidden" name="prix" value="{{commande.commande.prixTTC}}" />
+									<input  type="hidden" name="date" value="{{commande.date|date('dmyhms')}}" />
+									<button class="btn btn-success pull-right" type="submit">Payer</button>
+							</form>
+
+
+							<a href="{{path('livraison')}}" class="btn btn-warning pull-left">Retour</a>
+							<hr/>
+							<div class="well pull-right">
+								<h3 class="aligntext underlinetext">Adresse Livraison</h3>
+								<p>{{livraison.nom}} - {{livraison.nom}}  </p>
+								<p>téléphone: {{livraison.telephone}}</p>
+								<p>{{livraison.adresse}}  - {{livraison.cp}} - {{livraison.ville}} - {{livraison.pays}}</p>
+								<p>{{livraison.complement}}</p>
+							</div>
+							<div class="well pull-left">
+								<h3 class="aligntext underlinetext">Adresse facturation</h3>
+								<p>{{facturation.nom}} - {{facturation.nom}} </p>
+								<p>téléphone: {{facturation.telephone}}</p>
+								<p>{{facturation.adresse}}  - {{facturation.cp}} - {{facturation.ville}} - {{facturation.pays}}</p>
+								<p>{{facturation.complement}}</p>
+							</div>
+					</div>
+
+	</div>
+</div>
+	{% endblock %}

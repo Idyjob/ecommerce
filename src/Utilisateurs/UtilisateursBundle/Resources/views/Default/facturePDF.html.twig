@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Facture</title>
+        <link  rel="stylesheet" href="../css/facture.css"/>
+        <style>
+        h3 {
+            position:absolute;
+            color:#bf3e11;
+            font-size:10px;
+        }
+
+        .center {
+            text-align:center;
+        }
+
+        .color {
+            color:#bf3e11;
+        }
+
+        .strong {
+            font-weight:bold;
+        }
+        .min {
+            font-size:10px;
+        }
+
+        img {
+            position:absolute;
+            top:80px;
+            left:30px;
+        }
+
+        ul#coordonnes {
+            float:left;
+            margin-top:30px;
+            margin-left:400px;
+            list-style:none;
+        }
+
+        ul#coordonnes li {
+            height:20px;
+        }
+
+        table#enTete {
+            position:absolute;
+            top:5px;
+            right:330px;
+            text-align:center;
+        }
+
+        table#enTete h1 {
+            color:#bf3e11;
+            font-weight:bold;
+            font-size:20px;
+        }
+
+        table#entity {
+            float:left;
+            margin-top:30px;
+            text-align:center;
+        }
+
+        table#entity td {
+            height:45px;
+            border-bottom:1px solid #bf3e11;
+        }
+
+        table#total {
+            float:right;
+            margin-left:495px;
+            border-bottom:1px solid #bf3e11;
+            border-right:1px solid #bf3e11;
+            border-left:1px solid #bf3e11;
+        }
+
+        table#total td {
+            height:20px;
+        }
+
+        #footer {
+            position:absolute;
+            bottom:0px;width:100%;
+            text-align:center;
+            line-height:25px;
+        }
+
+
+
+        </style>
+
+        {% set facturation = facture.commande.facturation %}
+        {% set produits = facture.commande.produits %}
+        {% set refTva = facture.commande.tva %}
+
+        {% set totalHT = facture.commande.prixHT%}
+        {% set totalTTC = facture.commande.prixTTC%}
+    </head>
+    <body>
+        <h3>Dramanable</h3>
+
+
+        <table id="enTete">
+            <tr>
+                <td colspan="1"></td>
+                <td colspan="1"><h1>Facture</h1></td>
+                <td colspan="1"></td>
+            </tr>
+            <tr>
+                <td width="80">Page</td>
+                <td width="100">Date</td>
+                <td width="120">Ref</td>
+            </tr>
+            <tr>
+                <td class="color">[[page_nb]]</td>
+                <td class="color">{{facture.date| date('d/m/y h:m')}}</td>
+                <td class="color">{{facture.reference}}</td>
+            </tr>
+        </table>
+        <ul id="coordonnes">
+          <li>{{facturation.nom}} - {{facturation.nom}}  </li>
+          <li>téléphone: {{facturation.telephone}}</li>
+          <li>{{facturation.adresse}}  - {{facturation.cp}} - {{facturation.ville}} - {{facturation.pays}}</li>
+          <li>{{facturation.complement}}</li>
+        </ul>
+        <table id="entity">
+            <tr>
+                <td width="280">DESIGNATION</td>
+                <td width="105">QUANTITE</td>
+                <td width="100">P.U - HT</td>
+                <td width="105">MONTANT HT</td>
+                <td width="105">MONTANT TTC</td>
+            </tr>
+            	{% for produit in produits %}
+                <tr>
+
+                  <td> {{produit.reference}}</td>
+                  <td> {{produit.quantite}}</td>
+                  <td>{{produit.prixHT}} €</td>
+                  <td>{{produit.prixHT * produit.quantite}} €</td>
+                  <td>{{produit.prixTTC * produit.quantite}}  €</td>
+                </tr>
+              {% endfor%}
+        </table>
+        <table id="total">
+            <tr>
+                <td width="110">TOTAL HT :</td>
+                <td width="100" class="color"></td>
+            </tr>
+
+            {%for key,tva in refTva%}
+              <tr>
+
+                    <td width="110"> Tva {{key}} <span class="color min"></span> :</td>
+
+                    <td width="100" class="color">{{tva }} €</td>
+
+            </tr>
+            {%endfor%}
+            <tr>
+                <td width="110">TOTAL HT :</td>
+                <td width="100" class="color"> {{totalHT}} €</td>
+            </tr>
+
+            <tr>
+                <td width="110">TOTAL TTC :</td>
+                <td width="100" class="color"> {{totalTTC}} €</td>
+            </tr>
+
+        </table>
+        <div id="footer">
+            <span class="color strong"></span>
+            <br />
+        </div>
+    </body>
+</html>

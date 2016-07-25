@@ -1,0 +1,92 @@
+
+{% extends "::/layout/layout.html.twig" %}
+{% block title %}Tva - {{ parent() }}{% endblock %}
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+
+
+          {% include "UtilisateursBundle:Default:/modulesUsed/utilisateurConnecte.html.twig" %}
+
+
+        </div>
+
+        <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9">
+          {% render(controller('UtilisateursBundle:Default:flashMessages')) %}
+
+
+
+
+
+
+
+
+
+    <h1>Tva</h1>
+
+    <table class="table table-hover record_properties">
+        <tbody>
+            <tr>
+                <th scope="row">Id</th>
+                <td>{{ tva.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Multiplicate</th>
+                <td>{{ tva.multiplicate }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Nom</th>
+                <td>{{ tva.nom }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Valeur</th>
+                <td>{{ tva.valeur }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{ form_start(delete_form) }}
+        {{ form_widget(delete_form) }}
+
+        <div class="btn-group record_actions">
+
+            <a class="btn btn-info" href="{{ path('admin_tva') }}">
+                <i class="fa fa-list"></i> {{ 'Back to the list'|trans({}, 'admin') }}
+            </a>
+
+            <a class="btn btn-primary" href="{{ path('admin_tva_edit', {id: tva.id}) }}">
+                <i class="fa fa-edit"></i> {{ 'Edit'|trans({}, 'admin') }}
+            </a>
+            <button class="btn btn-danger" type="submit"><i class="fa fa-trash-o"></i> {{ 'Delete'|trans({}, 'admin') }}</button>
+
+        </div>
+
+        <input name="modal" type="hidden" value="0">
+    {{ form_end(delete_form) }}
+
+    <div id="delete_confirm" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>{{ 'Confirm delete'|trans({}, 'admin') }}</h3>
+                </div>
+                <div class="modal-body">
+                    <p>{{ 'You are about to delete an item'|trans({}, 'admin') }}, {{ 'this procedure is irreversible'|trans({}, 'admin') }}.</p>
+                    <p>{{ 'Do you want to proceed?'|trans({}, 'admin') }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger">{{ 'Yes'|trans({}, 'admin') }}</button>
+                    <button class="btn btn-default" data-dismiss="modal">{{ 'No'|trans({}, 'admin') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  </div>
+</div>
+</div>
+{% endblock %}

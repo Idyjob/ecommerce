@@ -1,0 +1,18 @@
+presentation:
+    path:     /
+    defaults: { _controller: EcommerceBundle:Produits:produits }
+
+categorieProduits:
+    path:     /categorie/{categorie}
+    defaults: { _controller: EcommerceBundle:Produits:produits }
+produit:
+    path:     /produit/{slug}
+    defaults: { _controller: EcommerceBundle:Produits:presentation }
+
+rechercheProduits:
+    path:     /recherche/
+    defaults: { _controller: EcommerceBundle:Produits:rechercheTraitement }
+
+upload_punk:
+    path:     /upload
+    defaults: { _controller: EcommerceBundle:Upload:upload }

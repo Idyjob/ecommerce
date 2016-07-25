@@ -1,0 +1,79 @@
+
+{% extends "::/layout/layout.html.twig" %}
+
+{% block title %}{{ '%entity% edit'|trans({'%entity%': 'Tva'}, 'admin') }} - {{ parent() }}{% endblock %}
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+
+
+          {% include "UtilisateursBundle:Default:/modulesUsed/utilisateurConnecte.html.twig" %}
+
+
+        </div>
+
+        <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9">
+          {% render(controller('UtilisateursBundle:Default:flashMessages')) %}
+
+
+
+
+
+
+          {% form_theme edit_form 'PagesBundle:Form:bootstrap_3_layout.html.twig' %}
+
+
+
+
+    <h1>{{ '%entity% edit'|trans({'%entity%': 'Tva'}, 'admin') }}</h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <p>
+            <button class="btn btn-primary" type="submit"><i class="fa fa-edit"></i> {{ 'Edit'|trans({}, 'admin') }}</button>
+        </p>
+    {{ form_end(edit_form) }}
+
+    {{ form_start(delete_form) }}
+        {{ form_widget(delete_form) }}
+
+        <div class="btn-group record_actions">
+
+            <a class="btn btn-info" href="{{ path('admin_tva') }}">
+                <i class="fa fa-list"></i> {{ 'Back to the list'|trans({}, 'admin') }}
+            </a>
+
+            <button class="btn btn-danger" type="submit"><i class="fa fa-trash-o"></i> {{ 'Delete'|trans({}, 'admin') }}</button>
+
+        </div>
+
+        <input name="modal" type="hidden" value="0">
+    {{ form_end(delete_form) }}
+
+    <div id="delete_confirm" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>{{ 'Confirm delete'|trans({}, 'admin') }}</h3>
+                </div>
+                <div class="modal-body">
+                    <p>{{ 'You are about to delete an item'|trans({}, 'admin') }}, {{ 'this procedure is irreversible'|trans({}, 'admin') }}.</p>
+                    <p>{{ 'Do you want to proceed?'|trans({}, 'admin') }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger">{{ 'Yes'|trans({}, 'admin') }}</button>
+                    <button class="btn btn-default" data-dismiss="modal">{{ 'No'|trans({}, 'admin') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+  </div>
+</div>
+</div>
+{% endblock %}

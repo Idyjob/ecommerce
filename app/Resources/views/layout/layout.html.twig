@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %} Dramanable  ecommerce{% endblock %}</title>
+        <meta name="keywords" content="{% block motsCles %} {% endblock%}"       />
+        <meta name="description" content="{% block description %} {% endblock%}"       />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/united/bootstrap.min.css" />
+        <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+        <link  rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css"/>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.6.1/chosen.min.css" rel="stylesheet"   />
+        <link  rel="stylesheet" href="{{asset('css/style.css')}}"/>
+        <!--   light gallery-->
+        <link href="{{ asset('js/lightgallery/dist/css/lightgallery.min.css') }}" type="text/css" rel="stylesheet" />
+        <!-- end light gallery -->
+
+
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="body">
+
+
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapsible">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{path('presentation')}}">AmmyBoutique</a>
+          </div>
+
+          <div class="navbar-collapse collapse" id="navbar-collapsible">
+
+
+            {% if not is_granted('IS_AUTHENTICATED_FULLY')%}
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{path('fos_user_security_login')}}"  >login</a></li>
+            <li><a href="{{path('fos_user_registration_register')}}"  >créer un compte</a></li>
+          </ul>
+
+          {% endif%}
+
+
+
+            {% render(controller('EcommerceBundle:Produits:recherche')) %}
+
+          </div>
+
+        </div>
+      </nav>
+
+
+        {% block body %}{% endblock %}
+
+        <hr />
+
+	<footer id="footer" class="vspace20">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-xs-4 col-xs-offset-1 col-lg-4 col-lg-offset-1">
+					<h4>Informations</h4>
+					<ul class="nav nav-stacked">
+            {% render(controller('PagesBundle:Pages:menu'))%}
+
+					</ul>
+				</div>
+
+				<div class="col-md-4 col-xs-4 col-sm-4 col-lg-4">
+					<h4>adresses</h4>
+					<p><i class="icon-map-marker"></i>&nbsp;Montpellier 34 000 - 10 rue des germain</p>
+				</div>
+
+				<div class="col-md-2 col-xs-2 col-sm-2 col-lg-2">
+					<h4>Nous contacter</h4>
+					<p><i class="icon-phone"></i>&nbsp;Tel: 06 18 18 58 70</p>
+					<p><i class="icon-print"></i>&nbsp;Fax: 06 18 18 58 70</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4 col-xs-4 col-sm-4 col-lg-4">
+					<p>&copy; Copyright {{'now' | date('Y')}} - Dramanable</p>
+				</div>
+			</div>
+		</div>
+    <!-- <div class="modal"></div> -->
+	</footer>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/umd/carousel.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.6.1/chosen.jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script   src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>
+  <script src="http://cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
+  <script src="https://cdn.jsdelivr.net/underscorejs/1.8.3/underscore-min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
+
+
+
+  <!--   light gallery-->
+  <script src="{{asset('js/lightgallery/dist/js/lightgallery.min.js') }}"></script>
+    <script src="{{asset('js/lightgallery/dist/js/lightgallery-all.min.js') }}"></script>
+  <script src="{{asset('js/lightgallery/dist/js/lg-thumbnail.min.js') }}"></script>
+  <script src="{{asset('js/lightgallery/dist/js/lg-fullscreen.min.js') }}"></script>
+  <!-- end light gallery -->
+
+  <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+  <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+
+
+  <script>
+
+  $().ready(function(){
+
+    $(".chosen").chosen();
+    $('.dateField').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+    $(".menuNavigation").menu({
+      active:false,
+       collapsible: true
+    });
+    $('.numberOption').selectmenu(
+    )
+
+     .selectmenu( "menuWidget" )
+      .addClass( "overflow" );
+
+
+      $('.submitsearchbtn').click(function(){
+
+        var searchval = $("#ecommerce_ecommercebundle_recherche_recherche").val();
+
+        if(searchval.trim() !=''){
+          searchForm.submit();
+        }else{
+          alert('veuillez entrer une chaine de caractère');
+        }
+      });
+  });
+
+  </script>
+  <script src="{{asset('/js/confirm_pugx.js')}}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,40 @@
+panier:
+    path:     /
+    defaults: { _controller: EcommerceBundle:Panier:panier }
+ajouter:
+    path:     /ajouter/{id}
+    defaults: { _controller: EcommerceBundle:Panier:ajouter }
+supprimer:
+    path:     /supprimer/{id}
+    defaults: { _controller: EcommerceBundle:Panier:supprimer }
+
+livraison:
+    path:     /livraison
+    defaults: { _controller: EcommerceBundle:Panier:livraison }
+listeadresses:
+    path:    /currentUser/adresses
+    defaults: { _controller: EcommerceBundle:Panier:adresses }
+
+ajoutadresses:
+    path:    /ajouteradresses
+    defaults: { _controller: EcommerceBundle:Panier:ajouterAdresse }
+    methods:  [POST]
+    options:
+      expose: true
+
+livraisonAdresseSuppression:
+    path:     /livraison/adresse/suppression/{id}
+    defaults: { _controller: EcommerceBundle:Panier:adresseSuppression }
+    options:
+      expose: true
+
+
+validation:
+    path:     /validation
+    defaults: { _controller: EcommerceBundle:Panier:validation }
+
+
+
+validationCommande:
+    path:     /api/banque/{id}
+    defaults: { _controller: EcommerceBundle:Panier:validationCommande }

@@ -1,0 +1,234 @@
+{% extends "::/layout/layout.html.twig" %}
+{%block body%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+          {% render(controller('UtilisateursBundle:Default:flashMessages')) %}
+            <h4>Adresse de livraison</h4>
+            <div id="collapseOne" class="accordion-body collapse in">
+                <div class="accordion-inner">
+                    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                        <form action="{{path('validation')}}" method="post">
+                            <h4>Adresse de livraison</h4>
+                          <div class="adresseslivraison supprimeradresse"></div>
+
+                            <br /><br />
+
+                            <h4>Adresse de facturation</h4>
+                            <div class="adressesfacturation supprimeradresse"></div>
+
+                            <button class="btn btn-primary">Valider mon adresse de livraison</button>
+                        </form>
+                    </div>
+
+
+								<div class="col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2 col-sm-4 col-sm-offset-2 col-xs-4 col-xs-offset-2">
+                  <h5>Ajouter une adresse</h5>
+                   <form     action="path('ajoutadresses')" id="ajouteradresse" method="POST">
+
+                      {{ form_widget(form) }}
+                      <button class="btn btn-primary" >Ajouter</button>
+                  </form>
+
+
+								</div>
+							</div>
+						</div>
+
+		</div>
+	</div>
+
+
+
+{%endblock%}
+
+{% block javascripts %}
+<script>
+
+function autocompleteVilles( ){
+
+
+  $.ajax({
+
+     type: "GET",
+     url : Routing.generate('allCodePostal'),
+     success: function(data){
+
+                    data.codepostaux;
+                 // autocomple ajax villes
+                 $( ".ville" ).autocomplete({
+                   source: data.codepostaux
+                 });
+
+              },
+      error: function(){
+
+      }
+
+  });
+
+
+}
+function addAdresse(){
+  var values = {};
+  var $form = $("#ajouteradresse"); //I assume formpref is id of your form
+ $.each($form.serializeArray(), function (i, field) {
+    values[field.name] = field.value;
+});
+    $.ajax({
+
+          type: "POST",
+          url : Routing.generate('ajoutadresses'),
+          // data:$("#ajouteradresse").serialize(),
+          data: values,
+          success: function(data){
+
+               $('#ajouteradresse')[0].reset();
+              $.each(data.newadresse,function(index,value){
+
+                                  $('.adresseslivraison ').append(
+                                    '<div class="'+value.id+'"><label class="radio" id="'+value.id+'">'+
+                                         '<input type="radio" name="livraison"   value="'+value.id+'" checked="checked">'+
+                                       value.adresse+', '+value.cp+' '+value.ville+',  '+value.pays+ '</label></span> '+'<span id="adresses"><a id="'+value.id+'" onClick="deleteAdresse('+value.id+')"  class="pointCursor" >supprimer</a></span></div>'
+                                );
+                                $('.adressesfacturation ').append(
+                                  '<div class="'+value.id+'"><label class="radio" id="'+value.id+'">'+
+                                       '<input type="radio" name="facturation"  value="'+value.id+'" checked="checked">'+
+                                     value.adresse+', '+value.cp+' '+value.ville+',  '+value.pays+ '</label></span> '+'<span id="adresses"><a id="'+value.id+'" onClick="deleteAdresse('+value.id+')"  class="pointCursor" >supprimer</a></span></div>'
+                              );
+              });
+
+
+
+
+
+
+
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown)
+                  {
+                  //  alert('Error: ' +  errorThrown);
+                    console.log(JSON.stringify(errorThrown))
+                  }
+    });
+}
+ function loadAdresses(){
+   $.ajax({
+
+      type: "GET",
+      url: "{{path('listeadresses')}}",
+      // dataType: 'json',
+      success: function(data){
+                  $.each(data.adresses,function(index,value){
+
+
+
+                      $('.adresseslivraison ').append(
+                         '<div class="'+value.id+'"><label class="radio" id="'+value.id+'">'+
+                              '<input type="radio" name="livraison"   value="'+value.id+'" checked="">'+
+                            value.adresse+', '+value.cp+' '+value.ville+',  '+value.pays+ '</label></span> '+'<span id="adresses"><a id="'+value.id+'" onClick="deleteAdresse('+value.id+')"  class="pointCursor" >supprimer</a></span></div>'
+                    );
+                    $('.adressesfacturation ').append(
+                      '<div class="'+value.id+'"><label class="radio" id="'+value.id+'">'+
+                           '<input type="radio" name="facturation"   value="'+value.id+'" checked="">'+
+                         value.adresse+', '+value.cp+' '+value.ville+',  '+value.pays+ '</label></span> '+'<span id="adresses"><a id="'+value.id+'" onClick="deleteAdresse('+value.id+')"  class="pointCursor" >supprimer</a></span></div>'
+                  );
+                  });
+               }
+
+   });
+ }
+
+
+function deleteAdresse(id){
+
+  if(confirm("Voulez vous supprimer cette adresse")){
+    $.ajax({
+      type: "GET",
+      url : Routing.generate('livraisonAdresseSuppression', {id:id}),
+
+      success: function(data ){
+        var classToRemove = $('.'+id).length;
+       if(classToRemove >= 1){
+         $('.'+id).css({'display':'none'});
+       }
+
+
+    },
+
+    error: function(XMLHttpRequest, textStatus, errorThrown)
+            {
+            //  alert('Error: ' +  errorThrown);
+              console.log(JSON.stringify(errorThrown))
+            }
+
+
+    });
+  }
+
+}
+
+ $().ready(function(){
+
+    autocompleteVilles();
+    loadAdresses();
+    $('.ville').hide();
+
+    $('#ajouteradresse').submit(function(e){
+         e.preventDefault();
+         addAdresse();
+         return false;
+
+    });
+
+
+
+
+
+
+    // ajax cp
+
+    $('.cp').blur(function(){
+      if($(this).val().length === 5){
+
+
+                $.ajax({
+                    type: 'GET',
+                    url : Routing.generate('villes', {cp:$(this).val()}),
+
+                    beforeSend: function(){
+                      if($('.ville option').length){
+                        $('.ville option').remove();
+                      }
+
+                    },
+                    success: function(data){
+                      $.each(data.villes,function(index, val){
+
+                        $('.ville').show();
+                        $('.ville').append($('<option>',{value: val, text:val}));
+                      });
+                    }
+                 });
+      }else{
+          $('.ville').val('');
+          $('.ville').hide();
+
+      }
+
+    });
+
+    // ajax cp end
+
+
+
+
+
+
+ });
+
+
+</script>
+
+
+{%endblock%}

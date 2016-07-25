@@ -1,0 +1,86 @@
+{% extends "::/layout/layout.html.twig" %}
+
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+
+          {% render(controller('EcommerceBundle:Categories:menu'))%}
+          {% include "UtilisateursBundle:Default:/modulesUsed/utilisateurConnecte.html.twig" %}
+          {% render(controller('EcommerceBundle:Panier:menu'))%}
+
+        </div>
+
+        <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9">
+          {% render(controller('UtilisateursBundle:Default:flashMessages')) %}
+
+          {% if produits|length != 0 %}
+
+            <ul class="thumbnails">
+                  {% for produit in produits %}
+                  {% set image = produit.images|first %}
+                <li class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="list-style:none;">
+                    <div class="thumbnail">
+                        <a class="btn btn-primary" href="{{path('produit',{'slug':produit.slug})}}">
+                        <img src="{{image.AssetPath|imagine_filter('large')}}" alt="{{image.name}}"  >
+                      </a>
+
+
+
+                        <div class="caption">
+                            <h4>{{produit.nom}}</h4>
+                            <p>{{produit.prix | tva(produit.tva.multiplicate)}} € TTC</p>
+                            <a class="btn btn-primary" href="{{path('produit',{'slug':produit.slug})}}">Plus d'infos</a>
+                            {% if panier[produit.id] is not defined%}
+                              <a class="btn btn-success" href="{{path('ajouter',{'id':produit.id})}}">Ajouter au panier</a>
+
+                            {% else%}
+                            <p>  <a   href="{{path('panier')}}">  Déjà dans votre panier ! </a></p>
+                            {% endif%}
+                        </div>
+                    </div>
+
+                </li>
+
+
+                  {% endfor %}
+            </ul>
+
+
+            <!--
+            <div >
+                <ul class="pagination">
+                    <li class="disabled"><span>Précédent</span></li>
+                    <li class="disabled"><span>1</span></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">Suivant</a></li>
+                </ul>
+            </div>
+            -->
+
+            <div class="navigation">
+                {{ knp_pagination_render(produits) }}
+            </div>
+            {% else %}
+            <div class="well">Aucun résultat !! oops !!!</div>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}
+
+{% block javascripts %}
+<script>
+$(function() {
+   $( "#dialog" ).dialog();
+ });
+</script>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "::/layout/layout.html.twig" %}
+
+{% block body%}
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-3 col-xs-3 col-sm-3 col-lg-3">
+						{% include "UtilisateursBundle:Default:/modulesUsed/utilisateurConnecte.html.twig" %}
+			</div>
+			<div class="col-md-9 col-xs-9 col-sm-9 col-lg-9">
+				{% render(controller('UtilisateursBundle:Default:flashMessages')) %}
+
+
+
+                    <h2>Factures</h2>
+                    <form>
+
+											{% if factures|length >0 %}
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Références</th>
+                                <th>Date</th>
+                                <th>Prix TTC</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+														{% for facture in factures%}
+														<tr>
+                                <td><a href="#">{{facture.reference}}</a></td>
+                                <td>{{facture.date| date('d/m/y h:m')}}</td>
+                                 <td>{{facture.commande.prixTTC}} €</td>  
+                                <td><a href="{{path('facturePDF',{'id':facture.id})}}" target="_blank">facture en pdf</a></td>
+                            </tr>
+														{% endfor%}
+
+
+
+
+                        </tbody>
+                    </table>
+
+
+										{%else%}
+
+												<p class="well redcolor aligntext"> Vous n'avez aucune facture !</p>
+
+
+											{%endif%}
+                </form>
+
+            </div>
+
+		</div>
+	</div>
+	{% endblock %}

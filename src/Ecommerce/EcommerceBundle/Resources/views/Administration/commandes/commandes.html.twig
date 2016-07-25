@@ -1,0 +1,61 @@
+{% extends "::/layout/layout.html.twig" %}
+
+{% block title %}commandes{% endblock %}
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+
+
+          {% include "UtilisateursBundle:Default:/modulesUsed/utilisateurConnecte.html.twig" %}
+
+
+        </div>
+
+        <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9">
+          {% render(controller('UtilisateursBundle:Default:flashMessages')) %}
+
+
+<h1>Liste des commandes</h1>
+
+    <table class="table table-striped table-hover table-bordered records_list">
+        <thead>
+            <tr>
+                <th scope="col"> Date</th>
+                <th scope="col">référence </th>
+
+                <th scope="col"> clients</th>
+
+            </tr>
+        </thead>
+        <tbody>
+          {% for commande in commandes %}
+                <tr>
+
+                    <td>{{commande.date | date('d/m/y h:i:s')}} </td>
+                    <td> {{commande.reference}}</td>
+                    <td>{{commande.utilisateur.username}} </td>
+                      <td> <i class="fa fa-check-square-o"></i> <i class="fa fa-square-o"></i> </td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" href="{{path('showFacturePDF',{'id':commande.id})}}">
+                                <i class="fa fa-file-o"></i>voir
+                            </a>
+
+                        </div>
+                    </td>
+                </tr>
+                {%endfor%}
+
+        </tbody>
+    </table>
+
+
+
+
+    </div>
+  </div>
+  </div>
+
+{% endblock %}

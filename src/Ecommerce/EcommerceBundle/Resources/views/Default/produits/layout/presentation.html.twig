@@ -1,0 +1,105 @@
+{% extends "::/layout/layout.html.twig" %}
+
+{% block title %} {{produit.nom}}{% endblock %}
+{% block motsCles %}{{produit.nom}} {% endblock%}
+{% block description %} {{produit.description}}{% endblock%}
+{% set images= produit.images%}
+
+{% block body %}
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-12">
+
+			<div class="">
+				{% if images %}
+
+				<div class="fb-comments" data-href="http://localhost/commerce/web/app_dev.php/produit/baguette#lg=2&amp;slide=1" data-width="200" data-numposts="5"></div>
+
+				<div id="comment-box-sep">
+						{% for image in images %}
+						  <a href="{{image.AssetPath|imagine_filter('large')}}" data-sub-html=''>
+						      <img src="{{image.AssetPath|imagine_filter('large')}}"  alt="{{image.name}}"/>
+						  </a>
+							{% endfor %}
+				</div>
+
+
+				{% endif%}
+
+			</div>
+
+			</div>
+			<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+				  {% render(controller('EcommerceBundle:Categories:menu'))%}
+			</div>
+			<div class="col-md-9 col-lg-9 col-sm-9 col-xs-9">
+				{% render(controller('UtilisateursBundle:Default:flashMessages')) %}
+				<div class="row">
+					 <!-- <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5"> -->
+					 <!-- <img
+					</div> -->
+
+					<div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+						<h4>{{produit.nom}}</h4>
+						<h5>{{produit.categorie.nom}}</h5>
+						    <p>{{produit.description}}</p>
+						<h4>{{produit.prix | tva(produit.tva.multiplicate)}} € TTC</h4>
+
+						{% if panier[produit.id] is not defined%}
+								<form action="{{path('ajouter',{'id':produit.id})}}"  method="get">
+
+
+									<select name="qte" class="col-md-1 col-lg-1 col-sm-1 col-xs-1 numberOption"  >
+										<option value="null">quantité</option>
+										{%for i in 1..10 %}
+										<option value="{{i}}">{{i}}</option>
+										{%endfor%}
+									</select>
+
+									<div>
+
+											<button class="btn btn-sm btn-primary" type="submit">Ajouter au panier</button>
+									</div>
+								</form>
+
+								{% else%}
+									<a class="btn btn-info" href="{{path('panier')}}">  Déjà dans votre panier ! </a>
+								{% endif%}
+
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	{% endblock %}
+
+{% block javascripts %}
+<script>
+$().ready(function(){
+
+	var $commentBoxSep = $('#comment-box-sep');
+
+	$commentBoxSep.lightGallery({
+	    addClass: 'fb-comments',
+	    download: false,
+	    galleryId: 2
+	});
+
+	$commentBoxSep.on('onAfterAppendSubHtml.lg', function() {
+	    try {
+	        FB.XFBML.parse();
+	    } catch (err) {
+	        $(window).on('fbAsyncInit', function() {
+	            FB.XFBML.parse();
+	        });
+	    }
+	});
+
+
+
+ });
+</script>
+{% endblock %}

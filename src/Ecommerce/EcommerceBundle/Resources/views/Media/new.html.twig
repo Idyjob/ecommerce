@@ -1,0 +1,13 @@
+{% extends "::/layout/layout.html.twig" %}
+
+{% form_theme form 'PagesBundle:Form:bootstrap_3_layout.html.twig' %}
+
+{% block title %}{{ '%entity% creation'|trans({'%entity%': 'Media'}, 'admin') }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>{{ '%entity% creation'|trans({'%entity%': 'Media'}, 'admin') }}</h1>
+
+      {% render(controller('EcommerceBundle:Media:uploadTemplate')) %}
+
+
+{% endblock %}

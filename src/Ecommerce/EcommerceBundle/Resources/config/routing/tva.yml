@@ -1,0 +1,35 @@
+admin_tva:
+    pattern:  /
+    defaults: { _controller: "EcommerceBundle:TvaAdmin:index" }
+
+admin_tva_sort:
+    pattern:  /{field}/{type}/sort
+    defaults: { _controller: "EcommerceBundle:TvaAdmin:sort" }
+    requirements: { type: ASC|DESC }
+
+admin_tva_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "EcommerceBundle:TvaAdmin:show" }
+
+admin_tva_new:
+    pattern:  /new
+    defaults: { _controller: "EcommerceBundle:TvaAdmin:new" }
+
+admin_tva_create:
+    pattern:  /create
+    defaults: { _controller: "EcommerceBundle:TvaAdmin:create" }
+    requirements: { _method: post }
+
+admin_tva_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "EcommerceBundle:TvaAdmin:edit" }
+
+admin_tva_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "EcommerceBundle:TvaAdmin:update" }
+    requirements: { _method: post|put }
+
+admin_tva_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "EcommerceBundle:TvaAdmin:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,20 @@
+{% extends "::/layout/layout.html.twig" %}
+
+
+{% block body %}
+
+<div class="container">
+		<div class="row">
+
+			<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+				<div class="row">
+                    <h4>{{page.titre}}</h4>
+
+                  <p>{{page.contenu|raw}}</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+{%endblock%}

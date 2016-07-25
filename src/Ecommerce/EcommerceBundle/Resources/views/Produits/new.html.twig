@@ -1,0 +1,89 @@
+
+{% extends "::/layout/layout.html.twig" %}
+
+{% block title %}{{ '%entity% creation'|trans({'%entity%': 'Produits'}, 'admin') }} - {{ parent() }}{% endblock %}
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+
+
+          {% include "UtilisateursBundle:Default:/modulesUsed/utilisateurConnecte.html.twig" %}
+
+
+        </div>
+
+        <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9">
+          {% render(controller('UtilisateursBundle:Default:flashMessages')) %}
+
+
+
+
+          {% form_theme form 'PagesBundle:Form:bootstrap_3_layout.html.twig' %}
+
+
+
+
+    <h1>{{ '%entity% creation'|trans({'%entity%': 'Produits'}, 'admin') }}</h1>
+
+    <form action="{{path('admin_produits_create')}}" method="post" {{form_enctype(form)}}>
+
+
+
+
+        {{ form_widget(form) }}
+
+        <p>  <li>
+          <a href="#" class="product_add">
+              Ajouter un autre media
+          </a>
+        </li></p>
+        <p>
+            <button class="btn btn-primary" type="submit">{{ 'Create'|trans({}, 'admin') }}</button>
+        </p>
+
+  </form>
+
+  <!-- <li>
+  <a href="#" class="product_add">
+      Ajouter un autre media
+  </a>
+</li> -->
+        <div class="btn-group record_actions">
+
+            <a class="btn btn-info" href="{{ path('admin_produits') }}">
+                <i class="fa fa-list"></i> {{ 'Back to the list'|trans({}, 'admin') }}
+            </a>
+
+
+        </div>
+
+</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+
+var imagesCount = '{{ form.images|length }}';
+$('a.product_add').click( function(event){
+        event.preventDefault();
+
+
+        // var collectionHolder = $('#produits_images');
+        var collectionHolder = $('#produits_images');
+        var prototype = collectionHolder.attr('data-prototype');
+        var form = prototype.replace(/__name__/g, imagesCount);
+        imagesCount++;
+
+        collectionHolder.append(form);
+
+
+
+    });
+
+</script>
+
+{% endblock %}

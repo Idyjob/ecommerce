@@ -1,0 +1,21 @@
+<div class=" ">
+    <h3><a href="{{path('panier')}}">Panier</a></h3>
+       <ul class="nav nav-list menuNavigation">
+
+         {%  if articles == 0 %}
+         <li>
+             <a href="{{path('panier')}}">Votre panier est vide !</a>
+         </li>
+         {% elseif articles == 1%}
+
+         <li>
+             <a href="{{path('panier')}}">Il y a un seul article dans votre panier</a>
+         </li>
+
+         {% elseif articles > 1%}
+         <li>
+             <a href="{{path('panier')}}">{{articles}} articles dans votre panier</a>
+         </li>
+         {%endif%}
+       </ul>
+   </div>

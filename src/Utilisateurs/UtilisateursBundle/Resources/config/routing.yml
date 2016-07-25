@@ -1,0 +1,21 @@
+villes:
+    path:     /villes/{cp}
+    defaults: { _controller: UtilisateursBundle:Utilisateurs:villes }
+    options:
+      expose: true
+
+allCodePostal:
+    path:     /allville/allcp
+    defaults: { _controller: UtilisateursBundle:Utilisateurs:allCodePostal }
+    options:
+      expose: true
+facture:
+    path:     /profile/facture
+    defaults: { _controller: UtilisateursBundle:Utilisateurs:facture }
+
+facturePDF:
+    path:     /profile/facture/pdf/{id}
+    defaults: { _controller: UtilisateursBundle:Utilisateurs:facturePDF }
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
