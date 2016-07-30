@@ -15,8 +15,8 @@ class MediaType extends AbstractType
     {
         $builder
 
-            ->add('name')
-            ->add('file','file')
+            ->add('name','text', array('attr'=>array('label'=>'Nom du média')))
+            ->add('file', 'file' )
         ;
     }
 
@@ -26,7 +26,8 @@ class MediaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Ecommerce\EcommerceBundle\Entity\Media',
+             'data_class' => 'Ecommerce\EcommerceBundle\Entity\Media',
+
         ));
     }
 

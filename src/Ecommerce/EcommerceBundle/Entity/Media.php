@@ -160,7 +160,9 @@ class Media
      return $this->name;
    }
 
-
+  //  public function getFile(){
+  //    return $this->getAssetPath();
+  //  }
 
     /**
      * Set name

@@ -10,6 +10,7 @@ use Ecommerce\EcommerceBundle\Form\Type\CategoriesType;
 use Ecommerce\EcommerceBundle\Form\Type\CategoriesFilterType;
 use Symfony\Component\Form\FormInterface;
 use Doctrine\ORM\QueryBuilder;
+ 
 
 /**
  * Categories controller.
